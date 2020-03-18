@@ -1,16 +1,28 @@
 <template>
     <el-row>
         <el-col :offset="2" :span="8">
-            <Post />
+            <PostSm/>
         </el-col>
+        <el-col :offset="1" :span="6">
+            <PostLg/>
+        </el-col>
+        <el-col :offset="1" :span="6">
+            <PostLg/>
+        </el-col>
+<!--        <el-col :offset="1" :span="6">-->
+<!--            <PostSm/>-->
+<!--        </el-col>-->
+
     </el-row>
 </template>
 
 <script>
-    import Post from "./Post/Post";
+    import PostSm from "./Post/PostSm";
+    import PostLg from "./Post/PostLg";
+
     export default {
         name: 'Feed',
-        components: { Post }
+        components: { PostSm, PostLg },
     }
 </script>
 
