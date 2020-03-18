@@ -1,12 +1,22 @@
 <template>
     <el-row>
-        <el-col :offset="2" :span="8">
+        <el-col :offset="2" :span="20" class="hidden-md-and-up">
             <PostSm/>
         </el-col>
-        <el-col :offset="1" :span="6">
+        <el-col :offset="2" :span="20" class="hidden-md-and-up">
+            <PostSm/>
+        </el-col>
+        <el-col :offset="2" :span="20" class="hidden-md-and-up">
+            <PostSm/>
+        </el-col>
+
+        <el-col :offset="2" :span="6" class="hidden-sm-and-down">
             <PostLg/>
         </el-col>
-        <el-col :offset="1" :span="6">
+        <el-col :offset="1" :span="6" class="hidden-sm-and-down">
+            <PostLg/>
+        </el-col>
+        <el-col :offset="1" :span="6" class="hidden-sm-and-down">
             <PostLg/>
         </el-col>
 <!--        <el-col :offset="1" :span="6">-->
