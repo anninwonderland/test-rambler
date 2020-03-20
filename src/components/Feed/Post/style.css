@@ -9,12 +9,7 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 
     margin: 6px;
-    height: 528px;
-}
-
-.post-wrapper-sm {
-    display: flex;
-    height: 320px;
+    min-height: 528px;
 }
 
 .header {
@@ -65,12 +60,10 @@
 
 .post-img-sm {
     width: 50%;
-    height: 100%;
+    height: auto;
     border-radius: 3px 0 0 3px;
 
     object-fit: cover;
-
-    /*display: inline-block;*/
 }
 
 .like {
@@ -102,3 +95,17 @@
 .post-text {
     padding: 4px 14px
 }
+
+@media only screen and (max-width: 767px) {
+    .post-wrapper {
+        min-height: 320px;
+        display: flex;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .post-text {
+        padding: 0;
+    }
+}
+

@@ -1,6 +1,6 @@
 <template>
-    <div class="post-wrapper post-wrapper-sm">
-        <img class="post-img-sm"
+    <div class="post-wrapper">
+        <img class="post-img-sm hidden-sm-and-up"
              src="https://avatars.mds.yandex.net/get-pdb/985791/25a243bc-9b31-4e8d-a18e-8c16a2ff008b/s1200"
              alt="Posted photo">
 
@@ -15,8 +15,9 @@
                 </div>
                 <span class="date">3h</span>
             </div>
-            <hr class="divider hidden-md-and-up">
+            <hr class="divider hidden-sm-and-up">
             <div class="content">
+                <img class="post-img hidden-xs-only" src="https://avatars.mds.yandex.net/get-pdb/985791/25a243bc-9b31-4e8d-a18e-8c16a2ff008b/s1200" alt="Posted photo">
                 <div class="like">
                     <div class="like-btn"></div>
                     <span>12 000</span>
@@ -31,7 +32,7 @@
 
 <script>
     export default {
-        name: 'PostSm'
+        name: 'Post'
     }
 </script>
 
