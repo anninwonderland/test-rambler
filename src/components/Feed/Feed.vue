@@ -82,7 +82,6 @@
                                         : 'https://www.flickr.com/images/buddyicon.gif';
 
 
-
                                     this.loadingData = false;
                                     this.loadingMore = false;
 
@@ -115,12 +114,12 @@
             onScroll() {
                 this.loadingMore = true;
 
-                    if (this.currentPage >= this.pages) {
-                        window.removeEventListener('scroll', this.onScroll);
-                        this.loadingMore = false;
-                    } else if ((window.pageYOffset + window.document.documentElement.clientHeight) >= window.document.body.scrollHeight) {
-                        this.fetchData();
-                    }
+                if (this.currentPage >= this.pages) {
+                    window.removeEventListener('scroll', this.onScroll);
+                    this.loadingMore = false;
+                } else if ((window.pageYOffset + window.document.documentElement.clientHeight) >= window.document.body.scrollHeight) {
+                    this.fetchData();
+                }
             },
         }
     }
