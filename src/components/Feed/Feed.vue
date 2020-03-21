@@ -1,7 +1,6 @@
-<!--eslint-disable-->
 <template>
-    <el-row>
-        <el-col :offset="2" :span="8" class="" v-for="item in data">
+    <el-row v-if="data.length" v-loading.fullscreen.lock="loadingData">
+        <el-col :offset="2" :span="8" v-for="item in data" :key="item.imageId">
             <Post :item="item"/>
         </el-col>
     </el-row>
@@ -17,6 +16,8 @@
         data() {
             return {
                 data: [],
+                loadingData: true,
+
                 currentPage: 1,
                 pages: null,
             }
@@ -33,38 +34,45 @@
 
                 axios.get(`https://www.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=${values.key}&content_type=1&format=json&nojsoncallback=1&page=${this.currentPage}&per_page=${values.perPage}`)
                     .then(response => {
-                        const photosArr = response.data.photos.photo;
+
                         this.pages = response.data.photos.pages;
+                        const photosArr = response.data.photos.photo;
 
                         photosArr.forEach(item => {
                             const post = {};
 
-                            axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getFavorites&api_key=${values.key}&photo_id=${item.id}&format=json&nojsoncallback=1`)
-                                .then((response) => {
-                                    post.likes = response.data.photo.total;
-                                });
+                            axios.all([
+                                axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getFavorites&api_key=${values.key}&photo_id=${item.id}&format=json&nojsoncallback=1`),
+                                axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${values.key}&photo_id=${item.id}&format=json&nojsoncallback=1`)
+                            ])
+                                .then(axios.spread((favResponse, infoResponse) => {
+                                    post.likes = favResponse.data.photo.total;
 
-                            axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${values.key}&photo_id=${item.id}&format=json&nojsoncallback=1`)
-                                .then((response) => {
-                                    post.username = response.data.photo.owner.username;
-                                    post.location = response.data.photo.owner.location;
-                                    post.date = new Date(Number(response.data.photo.dateuploaded)*1000).toLocaleDateString("en-US");
-                                    post.title = response.data.photo.title._content;
-                                    post.description = response.data.photo.description._content;
+                                    post.username = infoResponse.data.photo.owner.username;
+                                    post.location = infoResponse.data.photo.owner.location;
+                                    post.date = new Date(Number(infoResponse.data.photo.dateuploaded) * 1000).toLocaleDateString("en-US");
+                                    post.title = infoResponse.data.photo.title._content;
+                                    post.description = infoResponse.data.photo.description._content;
+                                    post.avatar = (infoResponse.data.photo.owner.iconserver > 0) ?
+                                        `http://farm${infoResponse.data.photo.owner.iconfarm}.staticflickr.com/${infoResponse.data.photo.owner.iconserver}/buddyicons/${infoResponse.data.photo.owner.nsid}.jpg`
+                                        : 'https://www.flickr.com/images/buddyicon.gif';
 
-                                    post.avatar = (response.data.photo.owner.iconserver > 0) ?
-                                        `http://farm${response.data.photo.owner.iconfarm}.staticflickr.com/${response.data.photo.owner.iconserver}/buddyicons/${response.data.photo.owner.nsid}.jpg`
-                                        : 'https://www.flickr.com/images/buddyicon.gif'
-                                });
+                                    post.imageId = item.id;
+                                    post.image = `https://farm${item.farm}.staticflickr.com/${item.server}/${item.id}_${item.secret}.jpg`;
 
-                            post.image = `https://farm${item.farm}.staticflickr.com/${item.server}/${item.id}_${item.secret}.jpg`;
+                                    this.data.push(post);
+                                    this.loadingData = false;
+                                }))
+                                .catch((err) => {
+                                    console.log(err);
 
-                            this.data.push(post);
+                                    this.loadingData = false;
+                                })
                         });
-                        console.log(this.data)
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         console.log(err);
+                        this.loadingData = false;
                     });
 
             }
