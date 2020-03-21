@@ -1,0 +1,17 @@
+.wrapper {
+    margin: 0 auto;
+    width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+    .wrapper {
+        -moz-column-count: 3;
+        -webkit-column-count: 3;
+        column-count: 3;
+
+        -moz-column-gap: 3%;
+        -webkit-column-gap: 3%;
+        column-gap: 3%;
+    }
+}
+

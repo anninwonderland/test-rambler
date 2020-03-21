@@ -8,8 +8,11 @@
     border: 1px solid #C2C2C2;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 
-    margin: 6px;
-    min-height: 528px;
+    background-color: white;
+    width: 100%;
+    margin: 10px 0;
+    display: inline-block;
+    box-sizing: border-box;
 }
 
 .header {
@@ -85,19 +88,21 @@
     height: 14px;
 }
 
+.content {
+    padding-bottom: 24px;
+}
+
 .post-title {
     margin: 0 12px 6px 12px;
-
     white-space: pre-line;
 }
 
 .post-desc {
     font-size: 13px;
     color: #4A4A4A;
-    margin: 0 12px 24px 12px;
+    margin: 0 12px;
 
     white-space: pre-line;
-    /*overflow: hidden;*/
 }
 
 .post-text {
@@ -112,6 +117,7 @@
 }
 
 @media only screen and (min-width: 768px) {
+
     .post-text {
         padding: 0;
     }

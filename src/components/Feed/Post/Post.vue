@@ -22,8 +22,8 @@
                      alt="Posted photo">
                 <div class="like">
                     <div class="like-btn" @click="likePhoto">
-                        <img v-if="isLiked" src="../../../assets/images/filled_like.png" alt="like me!">
-                        <img v-else src="../../../assets/images/empty_like.png" alt="unlike me:(">
+                        <img v-if="isLiked" src="../../../assets/images/filled_like.png" alt="like">
+                        <img v-else src="../../../assets/images/empty_like.png" alt="unlike">
                     </div>
                     <span v-if="item.likes">{{item.likes}}</span>
                 </div>
@@ -65,7 +65,7 @@
                 this.$notify({
                     title: `${this.isLiked ? 'Like!👍' : 'Unlike!👎'}`,
                     type: `${this.isLiked ? 'success' : 'warning'}`,
-                    message: `To photo with id ${this.item.imageId}`
+                    message: `Photo id is ${this.item.imageId}`
                 });
             }
         }

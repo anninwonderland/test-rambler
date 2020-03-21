@@ -1,7 +1,9 @@
 <template>
     <el-row v-if="data.length" v-loading.fullscreen.lock="loadingData">
-        <el-col :offset="2" :span="8" v-for="item in data" :key="item.imageId">
-            <Post :item="item"/>
+        <el-col :span="22" :offset="1" >
+            <div class="wrapper">
+                <Post v-for="item in data" :key="item.imageId" :item="item"/>
+            </div>
         </el-col>
     </el-row>
 </template>
