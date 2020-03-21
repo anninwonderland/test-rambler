@@ -30,6 +30,9 @@
                 <p class="post-title" v-if="item.title">
                     {{item.title}}
                 </p>
+                <p class="post-title" v-if="item.title">
+                    {{item.imageId}}
+                </p>
                 <p class="post-desc" :class="{'with-ellipsis': !isUnfolded}" v-if="item.description">
                     {{item.description}}
                 </p>
