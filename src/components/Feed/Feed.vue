@@ -1,6 +1,6 @@
 <template>
     <el-row v-if="data.length" v-loading.fullscreen.lock="loadingData">
-        <el-col :span="22" :offset="1" >
+        <el-col :span="22" :offset="1">
             <div class="wrapper">
                 <Post v-for="item in data" :key="item.imageId" :item="item"/>
             </div>
@@ -11,6 +11,7 @@
 <script>
     import Post from "./Post/Post";
     import axios from 'axios';
+    const moment = require('moment');
 
     export default {
         name: 'Feed',
@@ -48,19 +49,19 @@
                                 axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${values.key}&photo_id=${item.id}&format=json&nojsoncallback=1`)
                             ])
                                 .then(axios.spread((favResponse, infoResponse) => {
+                                    const source = infoResponse.data.photo;
+
+                                    post.username = source.owner.username;
+                                    post.location = source.owner.location;
+                                    post.date = moment.unix(source.dateuploaded).fromNow();
                                     post.likes = favResponse.data.photo.total;
-
-                                    post.username = infoResponse.data.photo.owner.username;
-                                    post.location = infoResponse.data.photo.owner.location;
-                                    post.title = infoResponse.data.photo.title._content;
-                                    post.description = infoResponse.data.photo.description._content;
-                                    post.date = this.formatDate(infoResponse.data.photo.dateuploaded);
-                                    post.avatar = (infoResponse.data.photo.owner.iconserver > 0) ?
-                                        `http://farm${infoResponse.data.photo.owner.iconfarm}.staticflickr.com/${infoResponse.data.photo.owner.iconserver}/buddyicons/${infoResponse.data.photo.owner.nsid}.jpg`
-                                        : 'https://www.flickr.com/images/buddyicon.gif';
-
+                                    post.title = source.title._content;
+                                    post.description = source.description._content;
                                     post.imageId = item.id;
+
                                     post.image = `https://farm${item.farm}.staticflickr.com/${item.server}/${item.id}_${item.secret}.jpg`;
+                                    post.avatar = (source.owner.iconserver === 0) ? 'https://www.flickr.com/images/buddyicon.gif'
+                                        : `http://farm${source.owner.iconfarm}.staticflickr.com/${source.owner.iconserver}/buddyicons/${source.owner.nsid}.jpg`;
 
                                     this.data.push(post);
                                     this.loadingData = false;
@@ -70,7 +71,6 @@
 
                                     this.$message.error('Something went wrong! 🤷');
                                     this.loadingData = false;
-
                                 })
                         });
                     })
@@ -81,12 +81,6 @@
                         this.loadingData = false;
                     });
 
-            },
-
-            formatDate(date){
-                const moment = require('moment');
-
-                return moment.unix(date).fromNow();
             }
         }
     }
