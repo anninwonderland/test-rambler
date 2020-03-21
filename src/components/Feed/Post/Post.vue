@@ -1,5 +1,5 @@
 <template>
-    <div class="post-wrapper" v-if="item">
+    <div class="post-wrapper" v-if="item" @click="unfoldPost">
         <img class="post-img-sm hidden-sm-and-up"
              :src="item.image"
              alt="Posted photo">
@@ -30,7 +30,7 @@
                 <p class="post-title" v-if="item.title">
                     {{item.title}}
                 </p>
-                <p class="post-desc" v-if="item.description">
+                <p class="post-desc" :class="{'with-ellipsis': !isUnfolded}" v-if="item.description">
                     {{item.description}}
                 </p>
             </div>
@@ -43,7 +43,8 @@
         name: 'Post',
         data() {
             return {
-                isLiked: false
+                isLiked: false,
+                isUnfolded: false
             }
         },
         props: {
@@ -63,10 +64,14 @@
                 this.isLiked ? this.item.likes += 1 : this.item.likes -= 1;
 
                 this.$notify({
-                    title: `${this.isLiked ? 'Like!👍' : 'Unlike!👎'}`,
+                    title: `${this.isLiked ? 'Like! ❤️' : 'Unlike! 💔'}`,
                     type: `${this.isLiked ? 'success' : 'warning'}`,
                     message: `Photo id is ${this.item.imageId}`
                 });
+            },
+
+            unfoldPost() {
+                this.isUnfolded = !this.isUnfolded
             }
         }
     }

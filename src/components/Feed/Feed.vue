@@ -52,9 +52,9 @@
 
                                     post.username = infoResponse.data.photo.owner.username;
                                     post.location = infoResponse.data.photo.owner.location;
-                                    post.date = new Date(Number(infoResponse.data.photo.dateuploaded) * 1000).toLocaleDateString("en-US");
                                     post.title = infoResponse.data.photo.title._content;
                                     post.description = infoResponse.data.photo.description._content;
+                                    post.date = this.formatDate(infoResponse.data.photo.dateuploaded);
                                     post.avatar = (infoResponse.data.photo.owner.iconserver > 0) ?
                                         `http://farm${infoResponse.data.photo.owner.iconfarm}.staticflickr.com/${infoResponse.data.photo.owner.iconserver}/buddyicons/${infoResponse.data.photo.owner.nsid}.jpg`
                                         : 'https://www.flickr.com/images/buddyicon.gif';
@@ -68,15 +68,25 @@
                                 .catch((err) => {
                                     console.log(err);
 
+                                    this.$message.error('Something went wrong! 🤷');
                                     this.loadingData = false;
+
                                 })
                         });
                     })
                     .catch((err) => {
                         console.log(err);
+
+                        this.$message.error('Something went wrong! 🤷');
                         this.loadingData = false;
                     });
 
+            },
+
+            formatDate(date){
+                const moment = require('moment');
+
+                return moment.unix(date).fromNow();
             }
         }
     }

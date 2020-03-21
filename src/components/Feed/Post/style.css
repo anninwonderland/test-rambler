@@ -13,6 +13,7 @@
     margin: 10px 0;
     display: inline-block;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .header {
@@ -94,7 +95,7 @@
 
 .post-title {
     margin: 0 12px 6px 12px;
-    white-space: pre-line;
+    /*white-space: pre-line;*/
 }
 
 .post-desc {
@@ -103,7 +104,16 @@
     margin: 0 12px;
 
     white-space: pre-line;
+    word-break: break-word;
+    overflow: hidden;
 }
+
+.with-ellipsis {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
 
 .post-text {
     padding: 4px 14px
@@ -113,11 +123,11 @@
     .post-wrapper {
         min-height: 320px;
         display: flex;
+        margin: 0 0 24px 0;
     }
 }
 
 @media only screen and (min-width: 768px) {
-
     .post-text {
         padding: 0;
     }
