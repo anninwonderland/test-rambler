@@ -1,6 +1,6 @@
 # Flickr feeds 📸📊
 ##### Rambler internship test SPA with Flickr posts
-##### Made by @anninwinderland, march 2020
+##### Made by @anninwonderland, march 2020
 
 ### Project setup
 ```
