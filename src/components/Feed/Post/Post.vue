@@ -66,11 +66,11 @@
             this.validateUrl();
         },
         methods: {
-            validateUrl(){
+            validateUrl() {
                 axios.get(this.item.image)
-                .catch(() => {
-                    this.item.image = 'https://image.flaticon.com/icons/svg/1281/1281278.svg';
-                })
+                    .catch(() => {
+                        this.item.image = 'https://image.flaticon.com/icons/svg/1281/1281278.svg';
+                    })
             },
 
             likePhoto() {
