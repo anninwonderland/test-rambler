@@ -1,5 +1,5 @@
 <template>
-    <div class="post-wrapper" v-if="item" @click="unfoldPost">
+    <div class="post-wrapper" v-if="item">
         <img class="post-img-sm hidden-sm-and-up"
              :src="item.image"
              alt="Posted photo">
@@ -20,8 +20,8 @@
                 <img class="post-img hidden-xs-only"
                      :src="item.image"
                      alt="Posted photo">
-                <div class="like">
-                    <div class="like-btn" @click="likePhoto">
+                <div class="like" @click="likePhoto">
+                    <div class="like-btn">
                         <img v-if="isLiked" src="../../../assets/images/filled_like.png" alt="like">
                         <img v-else src="../../../assets/images/empty_like.png" alt="unlike">
                     </div>
@@ -30,7 +30,10 @@
                 <p class="post-title" v-if="item.title">
                     {{item.title}}
                 </p>
-                <p class="post-desc" :class="{'with-ellipsis': !isUnfolded}" v-if="item.description">
+                <p class="post-desc"
+                   :class="{'with-ellipsis': !isUnfolded}"
+                   v-if="item.description"
+                   @click="unfoldPost">
                     {{item.description}}
                 </p>
             </div>
