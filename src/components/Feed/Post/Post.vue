@@ -42,6 +42,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
         name: 'Post',
         data() {
@@ -60,8 +62,17 @@
         },
         created() {
             this.item.likes = Number(this.item.likes);
+
+            this.validateUrl();
         },
         methods: {
+            validateUrl() {
+                axios.get(this.item.image)
+                    .catch(() => {
+                        this.item.image = 'https://image.flaticon.com/icons/svg/1281/1281278.svg';
+                    })
+            },
+
             likePhoto() {
                 this.isLiked = !this.isLiked;
                 this.isLiked ? this.item.likes += 1 : this.item.likes -= 1;
@@ -75,7 +86,7 @@
 
             unfoldPost() {
                 this.isUnfolded = !this.isUnfolded
-            }
+            },
         }
     }
 </script>

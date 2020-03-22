@@ -47,12 +47,16 @@
         methods: {
             fetchData() {
                 const values = {
+                    baseURL: 'https://www.flickr.com/services/rest',
                     key: '592415d6611422a407ddf84227d38375',
                     perPage: 10
                 };
                 this.currentPage += 1;
 
-                axios.get(`https://www.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=${values.key}&content_type=1&format=json&nojsoncallback=1&page=${this.currentPage}&per_page=${values.perPage}`)
+                axios({
+                    url: `?method=flickr.interestingness.getList&api_key=${values.key}&content_type=1&format=json&nojsoncallback=1&page=${this.currentPage}&per_page=${values.perPage}`,
+                    baseURL: values.baseURL
+                })
                     .then(response => {
 
                         this.pages = response.data.photos.pages;
@@ -62,8 +66,14 @@
                             const post = {};
 
                             axios.all([
-                                axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getFavorites&api_key=${values.key}&photo_id=${item.id}&format=json&nojsoncallback=1`),
-                                axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${values.key}&photo_id=${item.id}&format=json&nojsoncallback=1`)
+                                axios({
+                                    url: `?method=flickr.photos.getFavorites&api_key=${values.key}&photo_id=${item.id}&format=json&nojsoncallback=1`,
+                                    baseURL: values.baseURL
+                                }),
+                                axios({
+                                    url: `?method=flickr.photos.getInfo&api_key=${values.key}&photo_id=${item.id}&format=json&nojsoncallback=1`,
+                                    baseURL: values.baseURL
+                                })
                             ])
                                 .then(axios.spread((favResponse, infoResponse) => {
                                     const source = infoResponse.data.photo;
