@@ -1,29 +1,18 @@
-# test-rakina
+# Flickr feeds 📸📊
+##### Rambler internship test SPA with Flickr posts
+##### Made by @anninwinderland, march 2020
 
-## Project setup
+### Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+#### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+##### Used:
+- [Element UI](https://element.eleme.io/#/en-US) for layout and some UI elements
+- [Flickr API documentation](https://www.flickr.com/services/api/) 
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
